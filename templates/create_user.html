@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class = "login-container">
+    <h2>Create New User</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method = "post" action = "/users/new">
+        <div class = "form-group">
+            <label>Enter Username</label>
+            <input name = "username" type = "text" required>
+        </div>
+        <div class = "form-group">
+            <label>Enter Password</label>
+            <input name = "password" type = "password" required>
+        </div>
+
+         <div class="form-navigation">
+          <button type="submit" class="continue-btn">Log in</button>
+         </div>
+    </form>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class = "dashboard-container page3">
+    <h2>Observation - Section 3</h2>
+
+    <form method = "post">
+        {% for step in range (1, 6) %}
+        <div class = "form-group step-block live-check">
+            <h3>Step {{ step }} - was it applied correctly?</h3>
+
+            <label>Aplication</label>
+            <input type = "hidden" name = "step{{ step }}_mandatory" id="step{{ step }}_mandatory" value ="">
+
+            <div class = "button-group">
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_mandatory"
+                        data-value = "mandatory">
+                    Mandatory
+                </button>
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_mandatory"
+                        data-value = "optional">
+                    Optional
+                </button>
+            </div>
+
+            <label>Method</label>
+            <input type = "hidden" name = "step{{ step }}_method" id="step{{ step }}_method" value ="">
+
+            <div class = "button-group">
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_method"
+                        data-value = "SPALARE">
+                    Washing
+                </button>
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_method"
+                        data-value = "FRECARE">
+                    Rubbing
+                </button>
+            </div>
+
+            <label>Evaluation</label>
+            <input type = "hidden" name = "step{{ step }}_rating" id="step{{ step }}_rating" value ="">
+
+            <div class = "button-group">
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_rating"
+                        data-value = "C">C</button>
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_rating"
+                        data-value = "I">I</button>
+                <button type = "button"
+                        class = "choice-btn"
+                        data-input="step{{ step }}_rating"
+                        data-value = "N">N</button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class = "form-navigation">
+            <button type="submit" class="continue-btn">End Observation</button>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".choice-btn");
+
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                const inputId = button.dataset.input;
+                if (!inputId) return;
+
+                const hiddenInput = document.getElementById(inputId);
+                if (!hiddenInput) {
+                    console.error("Hidden input not found:", inputId);
+                    return;
+                }
+
+                hiddenInput.value = button.dataset.value;
+
+                const group = button.parentElement;
+                group.querySelectorAll(".choice-btn")
+                     .forEach(b => b.classList.remove("active-choice"));
+
+                button.classList.add("active-choice");
+            });
+        });
+    });
+</script>
+{% endblock %}

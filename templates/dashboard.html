@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "dashboard-container">
+
+  <h2>Welcome {{ user.username }}</h2>
+    <p>This is your main dashboard.</p>
+
+  <div class = "dashboard-buttons">
+    <a href = "/observation/page1" class = "action-btn">Create New Observation</a>
+    <a href = "/statistics" class = "action-btn">View Statistics</a>
+    {% if user.is_admin %}
+        <a href = "/users/new" class = "action-btn">Create New User</a>
+    {% endif %}
+    <a href = "/logout" class = "action-btn">Log Out</a>
+  </div>
+</div>
+
+{% endblock %}
