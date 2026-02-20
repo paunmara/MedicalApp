@@ -1,4 +1,3 @@
-#WATCH AN API TUTORIAL AND AN SQL TUTORIAL
 import os
 from pathlib import Path
 
@@ -12,7 +11,6 @@ else:
 from weasyprint import HTML
 
 from fastapi import FastAPI, Request, Depends, Form, HTTPException, status
-from weasyprint import HTML
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -22,7 +20,7 @@ from starlette.middleware.sessions import SessionMiddleware
 from datetime import datetime, time, date, timedelta
 from calendar import monthrange
 
-from .database import Base, engine, get_db
+from .database import Base, engine, get_db, SessionLocal
 from . import models
 from .authentification import get_user_by_username, verify_password, init_admin_user, create_user
 from .config import settings
@@ -43,8 +41,13 @@ templates = Jinja2Templates(directory="templates")
 
 @app.on_event("startup")
 def on_startup():
-    db = next(get_db())
-    init_admin_user(db)
+    engine.dispose()
+
+    db = SessionLocal()
+    try:
+        init_admin_user(db)
+    finally:
+        db.close()
 
 def get_current_user(request: Request, db: Session = Depends(get_db)):
     user_id = request.session.get("user_id")
@@ -264,6 +267,10 @@ def export_page2_pdf(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
 ):
+    try:
+        from weasyprint import HTML
+    except ImportError as e:
+        return Response(content=f"PDF Library Error: {str(e)}", status_code=500)
 
     start_date = date(year, month, 1)
     end_date = date(year, month, monthrange(year, month)[1])
