@@ -1,27 +1,13 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    #secret key for sign - in sessions
-    SECRET_KEY: str = 'secret-key-change-this'
+    DATABASE_URL: str
+    SECRET_KEY: str
 
-    #SQLite database URL
-    DATABASE_URL: str = 'sqlite:///./MedicalApp'
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore"
+    )
 
-    class Config:
-        env_file = ".env"
 
 settings = Settings()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
