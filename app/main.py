@@ -29,14 +29,7 @@ from .config import settings
 
 app = FastAPI()
 
-try:
-    print("Connecting to database...")
-    Base.metadata.create_all(bind=engine)
-    print("Database tables created successfully!")
-except Exception as e:
-    print("--- DATABASE ERROR ---")
-    print(e)
-    print("----------------------")
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(SessionMiddleware, secret_key = settings.SECRET_KEY)
 
