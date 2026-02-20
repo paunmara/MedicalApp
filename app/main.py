@@ -8,8 +8,6 @@ if os.name == 'nt':
 else:
     pass
 
-from weasyprint import HTML
-
 from fastapi import FastAPI, Request, Depends, Form, HTTPException, status
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles

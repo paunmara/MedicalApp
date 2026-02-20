@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# exit on error
 set -o errexit
 
 pip install --upgrade pip
-pip install -r requirements.txtlibpango-1.0-0 libharfbuzz0b libpangoft2-1.0-0 libffi-dev libjpeg-dev libopenjp2-7-dev || true
+
+pip install -r requirements.txt
