@@ -12,3 +12,4 @@ weasyprint
 anyio
 psycopg2-binary
 gunicorn
+dotenv
