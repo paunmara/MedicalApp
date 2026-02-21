@@ -3,15 +3,12 @@
 {% block content %}
 <div class = "dashboard-container">
 
-  <h2>Welcome {{ user.username }}</h2>
-    <p>This is your main dashboard.</p>
+  <h2>Bună ziua, {{ user.username }}!</h2>
+    <p>Acesta este meniul principal.</p>
 
   <div class = "dashboard-buttons">
-    <a href = "/observation/page1" class = "action-btn">Create New Observation</a>
-    <a href = "/statistics" class = "action-btn">View Statistics</a>
-    {% if user.is_admin %}
-        <a href = "/users/new" class = "action-btn">Create New User</a>
-    {% endif %}
+    <a href = "/observation/page1" class = "action-btn">Creează Observație Nouă</a>
+    <a href = "/statistics" class = "action-btn">Vizualizează Statistici</a>
     <a href = "/logout" class = "action-btn">Log Out</a>
   </div>
 </div>

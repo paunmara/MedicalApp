@@ -108,20 +108,28 @@ def dashboard(request: Request, current_user = Depends(get_current_user)):
     )
 
 @app.get("/users/new", response_class = HTMLResponse)
-def show_create_user(request: Request, current_user = Depends(get_current_user)):
-    if not current_user or not current_user.is_admin:
-        return RedirectResponse("/dashboard", status_code=302)
+def show_create_user(request: Request):
     return templates.TemplateResponse("create_user.html", {"request": request, "error": None})
 
-@app.post("/users/new")
-def create_new_user(request: Request, username: str = Form(...), password: str = Form(...), db: Session = Depends(get_db), current_user = Depends(get_current_user)):
-    if not current_user or not current_user.is_admin:
-        raise HTTPException(status_code=403)
-    if get_user_by_username(db,username):
-        return templates.TemplateResponse("create_user.html", {"request": request, "error": "Invalid: Username already exists"})
 
-    create_user(db, username = username, password = password, is_admin = True)
-    return RedirectResponse("/dashboard", status_code = 302)
+@app.post("/users/new")
+def create_new_user(
+        request: Request,
+        username: str = Form(...),
+        password: str = Form(...),
+        db: Session = Depends(get_db)
+):
+    clean_username = username.strip().lower()
+
+    if get_user_by_username(db, clean_username):
+        return templates.TemplateResponse(
+            "create_user.html",
+            {"request": request, "error": "Acest username este deja folosit."}
+        )
+
+    create_user(db, username=clean_username, password=password, is_admin=False)
+
+    return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
 
 
 
@@ -316,12 +324,11 @@ def export_page2_pdf(
 
 @app.get("/statistics/page3", response_class=HTMLResponse)
 def stats_page3(
-    request: Request,
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(get_current_user),
-    days: int = 30,
+        request: Request,
+        db: Session = Depends(get_db),
+        current_user: models.User = Depends(get_current_user),
+        days: int = 30,
 ):
-
     end_date = date.today()
     start_date = end_date - timedelta(days=days - 1)
 
@@ -376,13 +383,8 @@ def stats_page3(
     perfect_records = 0
     for obs_id in obs_ids:
         obs_steps = steps_by_obs.get(obs_id, [])
-        if not obs_steps:
-            continue
-        if all(st.rating == "C" for st in obs_steps):
+        if obs_steps and all(st.rating == "C" for st in obs_steps):
             perfect_records += 1
-
-    overall_percent = round((perfect_records / total_recordings) * 100, 1)
-    good_hospital = overall_percent >= 80.0
 
     step_stats = {
         i: {"total": 0, "C": 0, "fail": 0, "percent": 0}
@@ -390,18 +392,31 @@ def stats_page3(
     }
 
     for s in steps:
-        if s.step_number not in step_stats:
-            continue
-        step_stats[s.step_number]["total"] += 1
-        if s.rating == "C":
-            step_stats[s.step_number]["C"] += 1
-        else:
-            step_stats[s.step_number]["fail"] += 1
+        if s.step_number in step_stats:
+            step_stats[s.step_number]["total"] += 1
+            if s.rating == "C":
+                step_stats[s.step_number]["C"] += 1
+            else:
+                step_stats[s.step_number]["fail"] += 1
 
+    all_percentages = []
     for i in range(1, 6):
         total = step_stats[i]["total"]
         c = step_stats[i]["C"]
-        step_stats[i]["percent"] = round((c / total) * 100, 1) if total else 0
+
+        if total > 0:
+            percentage = round((c / total) * 100, 1)
+            step_stats[i]["percent"] = percentage
+            all_percentages.append(percentage)
+        else:
+            step_stats[i]["percent"] = 0
+
+    if all_percentages:
+        overall_percent = round(sum(all_percentages) / len(all_percentages), 1)
+    else:
+        overall_percent = 0
+
+    good_hospital = overall_percent >= 80.0
 
     return templates.TemplateResponse(
         "stats_page3.html",
@@ -417,4 +432,3 @@ def stats_page3(
             "step_stats": step_stats,
         }
     )
-

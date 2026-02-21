@@ -2,14 +2,14 @@
 {% block content %}
 
 <div class = "dashboard-container page3">
-    <h2>Observation - Section 3</h2>
+    <h2>Observație - Secțiunea 3</h2>
 
     <form method = "post">
         {% for step in range (1, 6) %}
         <div class = "form-group step-block live-check">
-            <h3>Step {{ step }} - was it applied correctly?</h3>
+            <h3>Momentul {{ step }} - A fost aplicat corect?</h3>
 
-            <label>Aplication</label>
+            <label>Aplicare</label>
             <input type = "hidden" name = "step{{ step }}_mandatory" id="step{{ step }}_mandatory" value ="">
 
             <div class = "button-group">
@@ -17,17 +17,17 @@
                         class = "choice-btn"
                         data-input="step{{ step }}_mandatory"
                         data-value = "mandatory">
-                    Mandatory
+                    Obligatoriu
                 </button>
                 <button type = "button"
                         class = "choice-btn"
                         data-input="step{{ step }}_mandatory"
                         data-value = "optional">
-                    Optional
+                    Opțional
                 </button>
             </div>
 
-            <label>Method</label>
+            <label>Metodă</label>
             <input type = "hidden" name = "step{{ step }}_method" id="step{{ step }}_method" value ="">
 
             <div class = "button-group">
@@ -35,38 +35,38 @@
                         class = "choice-btn"
                         data-input="step{{ step }}_method"
                         data-value = "SPALARE">
-                    Washing
+                    Spălare
                 </button>
                 <button type = "button"
                         class = "choice-btn"
                         data-input="step{{ step }}_method"
                         data-value = "FRECARE">
-                    Rubbing
+                    Frecare
                 </button>
             </div>
 
-            <label>Evaluation</label>
+            <label>Evaluare</label>
             <input type = "hidden" name = "step{{ step }}_rating" id="step{{ step }}_rating" value ="">
 
             <div class = "button-group">
                 <button type = "button"
                         class = "choice-btn"
                         data-input="step{{ step }}_rating"
-                        data-value = "C">C</button>
+                        data-value = "C">Conform</button>
                 <button type = "button"
                         class = "choice-btn"
                         data-input="step{{ step }}_rating"
-                        data-value = "I">I</button>
+                        data-value = "I">Incomplet</button>
                 <button type = "button"
                         class = "choice-btn"
                         data-input="step{{ step }}_rating"
-                        data-value = "N">N</button>
+                        data-value = "N">Neconform</button>
             </div>
         </div>
         {% endfor %}
 
         <div class = "form-navigation">
-            <button type="submit" class="continue-btn">End Observation</button>
+            <button type="submit" class="continue-btn">Finalizați Observație</button>
         </div>
 
     </form>
