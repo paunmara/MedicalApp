@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class = "dashboard-container">
-  <h2>Statistica pasilor de pregatire a mainii</h2>
+  <h2>Statistica pașilor de pregatire a mâinii</h2>
   <p>Ultimele {{ days }} de zile:</p>
   <p>{{ start_date }} - {{ end_date }}</p>
 
@@ -10,12 +10,12 @@
     <div class = "stats-grid">
       <div class = "stat-box">
         <div class = "stat-value">{{ total_recordings }}</div>
-        <div class = "stat-label">Total inregistrari</div>
+        <div class = "stat-label">Total înregistrări</div>
       </div>
 
       <div class = "stat-box">
         <div class = "stat-value">{{ overall_percent }}</div>
-        <div class = "stat-label">Scor general (Media pașilor)</div>
+        <div class = "stat-label">Scor general (Media momentelor)</div>
 
         {% if good_hospital %}
           <div class = "badge badge-good">✅ Bun (≥ 80%)</div>
@@ -27,13 +27,13 @@
 </div>
 
 <div class = "stats-card">
-  <h3>Complianta pasilor</h3>
+  <h3>Complianța Momentelor</h3>
 
   <div class = "bar-chart">
     {% for step in range(1, 6) %}
     {% set p = step_stats[step]["percent"] %}
     <div class="bar-row" style="--step-width: {{ p }}%;">
-      <div class="bar-label">Pas {{ step }}</div>
+      <div class="bar-label">Moment {{ step }}</div>
         <div class="bar-track">
           <div class="bar-fill" style="width: var(--step-width);"></div>
         </div>
@@ -44,17 +44,17 @@
 </div>
 
 <div class = "stats-card">
-  <h3>Detalii pasi</h3>
+  <h3>Detalii Momente</h3>
 
   <div class = "table-wrapper">
     <table class = "stats-table">
       <thead>
         <tr>
-          <th>Pas</th>
+          <th>Moment</th>
           <th>Total</th>
           <th>Corect</th>
-          <th>Esuat</th>
-          <th>Rata succes</th>
+          <th>Eșuat</th>
+          <th>Rată succes</th>
         </tr>
       </thead>
       <tbody>

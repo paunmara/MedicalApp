@@ -352,7 +352,6 @@ button.continue-btn {
     border: 2px solid #ffb36a;
 }
 
-/* Rectangle / Bar chart */
 .bar-chart {
     margin-top: 1rem;
 }
@@ -388,10 +387,12 @@ button.continue-btn {
     text-align: right;
 }
 
-/* Make summary responsive */
 @media (max-width: 900px) {
     .stats-grid {
-        grid-template-columns: 1fr;
-    }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
 }
 
