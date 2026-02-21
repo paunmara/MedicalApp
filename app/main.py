@@ -303,7 +303,7 @@ def export_page2_pdf(
         if isinstance(check_data, list) and len(check_data) > 0:
             check_data = check_data[0]
 
-        results_for_template.append((obs, obs.page2_check))
+        results_for_template.append((obs, check_data))
 
     html_content = templates.get_template(
         "stats_page2_pdf.html"
