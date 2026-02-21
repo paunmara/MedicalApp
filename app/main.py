@@ -294,12 +294,16 @@ def export_page2_pdf(
             models.Observation.user_id == current_user.id
         )
 
-    results = base_query.all()
+    observations = base_query.all()
+
+    results_for_template = []
+    for obs in observations:
+        results_for_template.append((obs, obs.page2_check))
 
     html_content = templates.get_template(
         "stats_page2_pdf.html"
     ).render(
-        results=results,
+        results=results_for_template,
         year=year,
         month=month,
         generated_at=datetime.now().strftime("%d.%m.%Y %H:%M"),
