@@ -298,6 +298,11 @@ def export_page2_pdf(
 
     results_for_template = []
     for obs in observations:
+        check_data = obs.page2 if hasattr(obs, 'page2') else None
+
+        if isinstance(check_data, list) and len(check_data) > 0:
+            check_data = check_data[0]
+
         results_for_template.append((obs, obs.page2_check))
 
     html_content = templates.get_template(
