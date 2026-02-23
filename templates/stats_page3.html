@@ -2,7 +2,7 @@
 {% block content %}
 <div class = "dashboard-container">
   <h2>Statistica pașilor de pregatire a mâinii</h2>
-  <p>Ultimele {{ days }} de zile:</p>
+  {% if days == 365 %} Ultimul An: {% else %} Ultimele {{ days }} de zile: {% endif %}
   <p>{{ start_date }} - {{ end_date }}</p>
 
   <div class = "stats-card">

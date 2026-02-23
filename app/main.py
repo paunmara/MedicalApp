@@ -336,7 +336,7 @@ def stats_page3(
         request: Request,
         db: Session = Depends(get_db),
         current_user: models.User = Depends(get_current_user),
-        days: int = 30,
+        days: int = 365,
 ):
     end_date = date.today()
     start_date = end_date - timedelta(days=days - 1)
