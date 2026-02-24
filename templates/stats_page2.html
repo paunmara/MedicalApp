@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 <div class = "dashboard-container table-container">
-  <h2>Verificari resurse</h2>
-  <p>Tabelul va fi afisat aici.</p>
+  <h2>Verificări resurse</h2>
+  <p>Tabelul va fi afișat aici.</p>
 
   <div class = "month-nav">
     <a class = "dash-button"
-       href = "/statistics/page2?year={{ year if month > 1 else year - 1 }}&month={{ month - 1 if month > 1 else 12 }}">⟵ Luna Precedenta</a>
+       href = "/statistics/page2?year={{ year if month > 1 else year - 1 }}&month={{ month - 1 if month > 1 else 12 }}">⟵ Luna Precedentă</a>
 
     <strong>{{ month }} / {{ year }}</strong>
 
     <a class = "dash-button"
-       href = "/statistics/page2?year={{ year if month < 12 else year + 1 }}&month={{ month + 1 if month < 12 else 1 }}">Luna Urmatoare ⟶</a>
+       href = "/statistics/page2?year={{ year if month < 12 else year + 1 }}&month={{ month + 1 if month < 12 else 1 }}">Luna Următoare ⟶</a>
   </div>
 
   <a href = "/statistics/page2/pdf?year={{ year }}&month={{ month }}" class="dash-button">Export PDF</a>
@@ -20,16 +20,16 @@
     <table class = "stats-table">
       <thead>
         <tr>
-          <th>Data</th>
+          <th>Dată</th>
           <th>Profesie</th>
-          <th>Sectia</th>
+          <th>Secția</th>
           <th>Salon</th>
-          <th>Apa</th>
-          <th>Sapun</th>
+          <th>Apă</th>
+          <th>Săpun</th>
           <th>Prosop</th>
           <th>Dezinfectant</th>
           <th>Pictograme</th>
-          <th>Maini</th>
+          <th>Mâini</th>
         </tr>
       </thead>
 
@@ -53,7 +53,7 @@
   </div>
 
   <div class = "button-group">
-    <a href = "/statistics" class = "dash-button">⬅ Inapoi</a>
+    <a href = "/statistics" class = "dash-button">⬅ Înapoi</a>
   </div>
 
   </div>
