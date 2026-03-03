@@ -8,7 +8,7 @@ if os.name == 'nt':
 else:
     pass
 
-from fastapi import FastAPI, Request, Depends, Form, HTTPException, status
+from fastapi import FastAPI, Request, Depends, Form, HTTPException, status, Query
 from fastapi.responses import HTMLResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -336,7 +336,7 @@ def stats_page3(
         request: Request,
         db: Session = Depends(get_db),
         current_user: models.User = Depends(get_current_user),
-        days: int = 365,
+        days: int = Query(365, gt = 0),
 ):
     end_date = date.today()
     start_date = end_date - timedelta(days=days - 1)
