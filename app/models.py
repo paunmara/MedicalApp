@@ -44,7 +44,7 @@ class FinalStep(Base):
     __tablename__ = "final_steps"
 
     id = Column(Integer, primary_key = True, index = True)
-    observation_id = Column(Integer, ForeignKey("observations.id"), nullable = False)
+    observation_id = Column(Integer, ForeignKey("observations.id", ondelete="CASCADE"), nullable = False)
     step_number = Column(Integer, nullable = False)
     is_mandatory = Column(Boolean, nullable = False)
     method = Column(String, nullable = True)
