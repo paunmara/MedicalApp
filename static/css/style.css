@@ -396,3 +396,48 @@ button.continue-btn {
 }
 }
 
+/* Center the Step labels and the Button Groups */
+.form-group {
+    text-align: center; /* Centers the text labels */
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers the button group horizontally */
+}
+
+.button-group {
+    display: flex;
+    justify-content: center; /* Centers the Da/Nu buttons */
+    gap: 15px; /* Adds space between Da and Nu */
+    margin-top: 10px;
+    width: 100%;
+}
+
+/* Fix the Save and Inapoi button layout */
+.form-navigation {
+    display: flex;
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center;
+    gap: 15px;
+    margin-top: 40px;
+}
+
+.continue-btn {
+    width: 80%; /* Makes the save button nice and wide on mobile */
+    max-width: 300px;
+    padding: 12px;
+}
+
+.back-link-container {
+    margin-top: 5px;
+}
+
+.cancel-link {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.cancel-link:hover {
+    text-decoration: underline;
+}
