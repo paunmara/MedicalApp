@@ -486,7 +486,7 @@ def handwash_stats(request: Request, db: Session = Depends(get_db), current_user
     total = len(surveys)
 
     if total == 0:
-        return templates.TemplateResponse("handwash_stats.html", {"request": request, "total": 0, "results": []})
+        return templates.TemplateResponse("stats_handwash.html", {"request": request, "total": 0, "results": []})
 
     steps = [
         ("step1", "1. Palmă pe palmă"),
