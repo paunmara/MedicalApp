@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Date
 from .database import Base
 from sqlalchemy.orm import relationship
+from datetime import date
 
 print("DEBUG Boolean: ", Boolean, type(Boolean))
 
@@ -51,3 +52,20 @@ class FinalStep(Base):
     rating = Column(String, nullable = True)
 
     observation = relationship("Observation", backref = "page3")
+
+class HandwashSurvey(Base):
+    __tablename__ = "handwash_surveys"
+    id = Column(Integer, primary_key = True, index = True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable = False)
+    date = Column(Date, nullable = False)
+
+    step1 = Column(Boolean, nullable = False)
+    step2 = Column(Boolean, nullable = False)
+    step3 = Column(Boolean, nullable = False)
+    step4 = Column(Boolean, nullable = False)
+    step5 = Column(Boolean, nullable = False)
+    step6 = Column(Boolean, nullable = False)
+    step7 = Column(Boolean, nullable = False)
+
+    user = relationship("User", backref = "handwash_surveys")
+

@@ -150,7 +150,7 @@ def submit_observation_page1(request: Request, date_str: str = Form(...), profes
     db.refresh(new_obs)
 
     request.session["current_observation_id"] = new_obs.id
-    return RedirectResponse(url = "/observation/page2", status_code=302)
+    return RedirectResponse(url = "/observation/page2", status_code=303)
 
 
 
@@ -165,13 +165,13 @@ def submit_page2(request: Request, apa_curenta: str = Form(...), sapun_lichid: s
     observation_id = request.session.get("current_observation_id")
 
     if not observation_id:
-        return RedirectResponse("/dashboard", status_code = 302)
+        return RedirectResponse("/dashboard", status_code = 303)
     page2_check = models.Page2Check(observation_id=observation_id, apa_curenta=apa_curenta, sapun_lichid=sapun_lichid, prosop_hartie=prosop_hartie, dezinfectant=dezinfectant, pictograme=pictograme, pregatire_maini=pregatire_maini)
 
     db.add(page2_check)
     db.commit()
 
-    return RedirectResponse("/observation/page3", status_code = 302)
+    return RedirectResponse("/observation/page3", status_code = 303)
 
 
 
@@ -208,7 +208,7 @@ async def submit_page3(request: Request, db: Session = Depends(get_db)):
 
     db.commit()
 
-    return RedirectResponse("/dashboard", status_code = 302)
+    return RedirectResponse("/dashboard", status_code = 303)
 
 
 
@@ -441,3 +441,71 @@ def stats_page3(
             "step_stats": step_stats,
         }
     )
+
+
+
+#========================Handwash steps survey========================
+
+
+@app.get("/handwash/new", response_class=HTMLResponse)
+def handwash_form(request: Request, current_user: models.User = Depends(get_current_user)):
+    return templates.TemplateResponse("handwash_form.html", {"request": request})
+
+@app.post("/handwash/new")
+def save_handwash_form(request: Request,
+                  db: Session = Depends(get_db),
+                  current_user: models.User = Depends(get_current_user),
+                  step1: str = Form(""),
+                  step2: str = Form(""),
+                  step3: str = Form(""),
+                  step4: str = Form(""),
+                  step5: str = Form(""),
+                  step6: str = Form(""),
+                  step7: str = Form(""),
+
+                  survey_date: str = Form(...)
+):
+    new_survey = models.HandwashSurvey(
+        user_id = current_user.id,
+        date = datetime.strptime(survey_date, "%Y-%m-%d").date(),
+        step1=(step1 == "true"),
+        step2=(step2 == "true"),
+        step3=(step3 == "true"),
+        step4=(step4 == "true"),
+        step5=(step5 == "true"),
+        step6=(step6 == "true"),
+        step7=(step7 == "true"),
+    )
+    db.add(new_survey)
+    db.commit()
+    return RedirectResponse(url = "/dashboard", status_code = 303)
+
+@app.get("/statistics/handwash", response_class=HTMLResponse)
+def handwash_stats(request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
+    surveys = db.query(models.HandwashSurvey).all()
+    total = len(surveys)
+
+    if total == 0:
+        return templates.TemplateResponse("handwash_stats.html", {"request": request, "total": 0, "results": []})
+
+    steps = [
+        ("step1", "1. Palmă pe palmă"),
+        ("step2", "2. Dosul mâinilor"),
+        ("step3", "3. Între degete"),
+        ("step4", "4. Dosul degetelor"),
+        ("step5", "5. Police (Degetul mare)"),
+        ("step6", "6. Unghii / Palmă"),
+        ("step7", "7. Încheieturi")
+    ]
+
+    results = []
+    for attr, label in steps:
+        count_true = sum(1 for s in surveys if getattr(s, attr) == True)
+        percentage = round((count_true / total) * 100, 1)
+        results.append({"label": label, "percentage": percentage})
+
+    return templates.TemplateResponse("handwash_stats.html", {
+        "request": request,
+        "results": results,
+        "total": total
+    })

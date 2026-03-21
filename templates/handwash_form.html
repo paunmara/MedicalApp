@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-container handwash-page">
+    <h2>Evaluare Tehnica Spălare (7 Pași)</h2>
+
+    <form method="post" action="/handwash/new">
+        <div class="form-group">
+            <label for="survey_date">Data Evaluării (Selectați manual):</label>
+            <input type="date" name="survey_date" id="survey_date" class="date-input-styled" required>
+        </div>
+
+        <hr class="separator">
+
+        <div class="form-group">
+            <label>1. Palmă pe palmă:</label>
+            <input type="hidden" name="step1" id="step1" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step1" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step1" data-value="false">Nu</button>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>2. Dosul mâinilor:</label>
+            <input type="hidden" name="step2" id="step2" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step2" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step2" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>3. Între degete:</label>
+            <input type="hidden" name="step3" id="step3" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step3" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step3" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>4. Dosul degetelor:</label>
+            <input type="hidden" name="step4" id="step4" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step4" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step4" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>5. Police (Degetul mare):</label>
+            <input type="hidden" name="step5" id="step5" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step5" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step5" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>6. Unghii / Palmă:</label>
+            <input type="hidden" name="step6" id="step6" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step6" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step6" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>7. Încheieturi:</label>
+            <input type="hidden" name="step7" id="step7" value="" required>
+            <div class="button-group">
+                <button type="button" class="choice-btn" data-input="step7" data-value="true">Da</button>
+                <button type="button" class="choice-btn" data-input="step7" data-value="false">Nu</button>
+            </div>
+        </div>
+
+        <div class="form-navigation">
+            <button type="submit" class="continue-btn">Salvează Evaluarea</button>
+            <a href="/dashboard" class="cancel-link">Înapoi</a>
+        </div>
+    </form>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const dateInput = document.getElementById('survey_date');
+    if (!dateInput.value) {
+        dateInput.valueAsDate = new Date();
+    }
+
+    const buttons = document.querySelectorAll(".choice-btn");
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const inputId = button.dataset.input;
+            const value = button.dataset.value;
+            document.getElementById(inputId).value = value;
+
+            const group = button.parentElement;
+            group.querySelectorAll(".choice-btn").forEach(b => b.classList.remove("active-choice"));
+            button.classList.add("active-choice");
+        });
+    });
+    document.querySelector('form').addEventListener('submit', (e) => {
+    for(let i=1; i<=7; i++) {
+        if(document.getElementById(`step${i}`).value === "") {
+            alert(`Vă rugăm să selectați o opțiune pentru Pasul ${i}`);
+            e.preventDefault();
+            return;
+        }
+    }
+});
+});
+</script>
+{% endblock %}

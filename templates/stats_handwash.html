@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-container">
+    <h2>📊 Conformitate Tehnică Spălare</h2>
+    <p>Bazat pe <strong>{{ total }}</strong> evaluări înregistrate.</p>
+
+    <div class="stats-list">
+        {% for item in results %}
+        <div class="stat-item">
+            <div class="stat-header">
+                <span>{{ item.label }}</span>
+                <span class="pct-text">{{ item.percentage }}%</span>
+            </div>
+            <div class="progress-bg">
+                <div class="progress-fill" style="width: {{ item.percentage }}%;"></div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="form-navigation" style="margin-top: 30px;">
+        <a href="/dashboard" class="continue-btn">Înapoi la Dashboard</a>
+    </div>
+</div>
+
+<style>
+    .stat-item { margin-bottom: 25px; }
+    .stat-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 500; }
+    .pct-text { color: #2c3e50; font-weight: bold; }
+    
+    .progress-bg { 
+        background-color: #e0e0e0; 
+        border-radius: 10px; 
+        height: 15px; 
+        width: 100%; 
+        overflow: hidden;
+    }
+    
+    .progress-fill { 
+        background-color: #4CAF50;
+        height: 100%; 
+        border-radius: 10px;
+        transition: width 0.8s ease-in-out;
+    }
+
+    .progress-fill[style^="width: 0"], 
+    .progress-fill[style^="width: 1"], 
+    .progress-fill[style^="width: 2"],
+    .progress-fill[style^="width: 3"],
+    .progress-fill[style^="width: 4"],
+    .progress-fill[style^="width: 5"],
+    .progress-fill[style^="width: 6"] {
+        background-color: #f39c12;
+    }
+</style>
+{% endblock %}
