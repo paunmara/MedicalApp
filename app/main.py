@@ -504,7 +504,7 @@ def handwash_stats(request: Request, db: Session = Depends(get_db), current_user
         percentage = round((count_true / total) * 100, 1)
         results.append({"label": label, "percentage": percentage})
 
-    return templates.TemplateResponse("handwash_stats.html", {
+    return templates.TemplateResponse("stats_handwash.html", {
         "request": request,
         "results": results,
         "total": total
