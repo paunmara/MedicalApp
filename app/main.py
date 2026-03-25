@@ -63,11 +63,9 @@ def root(request: Request):
 @app.get("/login", response_class=HTMLResponse)
 def show_login(request: Request):
     return templates.TemplateResponse(
-        "login.html",
-        {
-            "request": request,
-            "error": None
-        }
+        request=request,
+        name="login.html",
+        context={"error": None}
     )
 
 @app.post("/login", response_class = HTMLResponse)
@@ -75,12 +73,10 @@ def do_login(request: Request, username: str = Form(...), password: str = Form(.
     user = get_user_by_username(db, username.strip().lower())
     if not user or not verify_password(password, user.password_hash):
         return templates.TemplateResponse(
-            "login.html",
-            {
-                "request": request,
-                "error": "Invalid username or password"
-            },
-            status_code = status.HTTP_401_UNAUTHORIZED
+            request=request,
+            name="login.html",
+            context={"error": "Invalid username or password"},
+            status_code=status.HTTP_401_UNAUTHORIZED
         )
     request.session["user_id"] = user.id
     return RedirectResponse(url = "/dashboard", status_code = status.HTTP_302_FOUND)
@@ -100,17 +96,18 @@ def dashboard(request: Request, current_user = Depends(get_current_user)):
     if current_user is None:
         return RedirectResponse(url = "/login", status_code= status.HTTP_302_FOUND)
     return templates.TemplateResponse(
-        "dashboard.html",
-        {
-         "request": request,
-         "user": current_user
-        }
+        request=request,
+        name="dashboard.html",
+        context={"user": current_user}
     )
 
 @app.get("/users/new", response_class = HTMLResponse)
 def show_create_user(request: Request):
-    return templates.TemplateResponse("create_user.html", {"request": request, "error": None})
-
+    return templates.TemplateResponse(
+        request=request,
+        name="create_user.html",
+        context={"error": None}
+    )
 
 @app.post("/users/new")
 def create_new_user(
@@ -137,8 +134,10 @@ def create_new_user(
 
 @app.get("/observation/page1", response_class = HTMLResponse)
 def show_observation_page1(request: Request):
-    return templates.TemplateResponse("page1.html", {"request": request})
-
+    return templates.TemplateResponse(
+        request=request,
+        name="page1.html"
+    )
 @app.post("/observation/page1")
 def submit_observation_page1(request: Request, date_str: str = Form(...), profession: str = Form(...), section: str = Form(...), salon: str = Form(...), db: Session = Depends(get_db)):
     parsed_date = datetime.strptime(date_str, "%Y-%m-%d").date()
@@ -156,10 +155,12 @@ def submit_observation_page1(request: Request, date_str: str = Form(...), profes
 
 #========================page 2 quiz========================
 
-@app.get("/observation/page2", response_class = HTMLResponse)
+@app.get("/observation/page2", response_class=HTMLResponse)
 def show_page2(request: Request):
-    return templates.TemplateResponse("page2.html", {"request" : request})
-
+    return templates.TemplateResponse(
+        request=request,
+        name="page2.html"
+    )
 @app.post("/observation/page2")
 def submit_page2(request: Request, apa_curenta: str = Form(...), sapun_lichid: str = Form(...), prosop_hartie: str = Form(...), dezinfectant: str = Form(...), pictograme: str = Form(...), pregatire_maini: str = Form(...), db: Session = Depends(get_db)):
     observation_id = request.session.get("current_observation_id")
@@ -179,8 +180,10 @@ def submit_page2(request: Request, apa_curenta: str = Form(...), sapun_lichid: s
 
 @app.get("/observation/page3", response_class=HTMLResponse)
 def show_page3(request: Request):
-    return templates.TemplateResponse("page3.html", {"request": request})
-
+    return templates.TemplateResponse(
+        request=request,
+        name="page3.html"
+    )
 @app.post("/observation/page3")
 async def submit_page3(request: Request, db: Session = Depends(get_db)):
     observation_id = request.session.get("current_observation_id")
@@ -214,10 +217,12 @@ async def submit_page3(request: Request, db: Session = Depends(get_db)):
 
 #========================second dash========================
 
-@app.get("/statistics", response_class = HTMLResponse)
+@app.get("/statistics", response_class=HTMLResponse)
 def statistics_dashboard(request: Request):
-    return templates.TemplateResponse("statistics_dashboard.html", {"request": request})
-
+    return templates.TemplateResponse(
+        request=request,
+        name="statistics_dashboard.html"
+    )
 
 
 #========================statistics page 2========================
@@ -256,9 +261,9 @@ def statistics_page2(
     results = base_query.all()
 
     return templates.TemplateResponse(
-        "stats_page2.html",
-        {
-            "request": request,
+        request=request,
+        name="stats_page2.html",
+        context={
             "results": results,
             "year": year,
             "month": month,
@@ -361,9 +366,9 @@ def stats_page3(
 
     if total_recordings == 0:
         return templates.TemplateResponse(
-            "stats_page3.html",
-            {
-                "request": request,
+            request=request,
+            name="stats_page3.html",
+            context={
                 "days": days,
                 "start_date": start_date,
                 "end_date": end_date,
@@ -428,9 +433,9 @@ def stats_page3(
     good_hospital = overall_percent >= 80.0
 
     return templates.TemplateResponse(
-        "stats_page3.html",
-        {
-            "request": request,
+        request=request,
+        name="stats_page3.html",
+        context={
             "days": days,
             "start_date": start_date,
             "end_date": end_date,
@@ -449,7 +454,10 @@ def stats_page3(
 
 @app.get("/handwash/new", response_class=HTMLResponse)
 def handwash_form(request: Request, current_user: models.User = Depends(get_current_user)):
-    return templates.TemplateResponse("handwash_form.html", {"request": request})
+    return templates.TemplateResponse(
+        request=request,
+        name="handwash_form.html"
+    )
 
 @app.post("/handwash/new")
 def save_handwash_form(request: Request,
@@ -486,7 +494,14 @@ def handwash_stats(request: Request, db: Session = Depends(get_db), current_user
     total = len(surveys)
 
     if total == 0:
-        return templates.TemplateResponse("stats_handwash.html", {"request": request, "total": 0, "results": []})
+        return templates.TemplateResponse(
+            request=request,
+            name="stats_handwash.html",
+            context={
+                "total": 0,
+                "results": []
+            }
+        )
 
     steps = [
         ("step1", "1. Palmă pe palmă"),
@@ -504,8 +519,11 @@ def handwash_stats(request: Request, db: Session = Depends(get_db), current_user
         percentage = round((count_true / total) * 100, 1)
         results.append({"label": label, "percentage": percentage})
 
-    return templates.TemplateResponse("stats_handwash.html", {
-        "request": request,
-        "results": results,
-        "total": total
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="stats_handwash.html",
+        context={
+            "results": results,
+            "total": total
+        }
+    )
