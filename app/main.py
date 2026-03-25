@@ -482,7 +482,7 @@ def save_handwash_form(request: Request,
 
 @app.get("/statistics/handwash", response_class=HTMLResponse)
 def handwash_stats(request: Request, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
-    surveys = db.query(models.HandwashSurvey).all()
+    surveys = db.query(models.HandwashSurvey).filter(models.HandwashSurvey.user_id == current_user.id).all()
     total = len(surveys)
 
     if total == 0:
