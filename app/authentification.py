@@ -3,6 +3,7 @@ from passlib.context import CryptContext
 from fastapi import Depends, Request
 from . import models
 from .database import get_db
+from .config import settings
 import os
 
 pwd_context = CryptContext(schemes=["bcrypt"], bcrypt__rounds = 12, deprecated='auto')
@@ -30,16 +31,24 @@ def create_user(db: Session, username: str, password: str, is_admin: bool = True
     db.refresh(user)
     return user
 
+
 def init_admin_user(db):
+
     admin = get_user_by_username(db, "admin")
-    env_password = os.getenv("ADMIN_PASSWORD", "default_local_password")
+    secure_password = settings.ADMIN_PASSWORD
 
     if not admin:
-        create_user(db, "admin", env_password, is_admin=True)
+
+        create_user(db, "admin", secure_password, is_admin=True)
+        print("Admin user created successfully.")
     else:
-        admin.password_hash = hash_password(env_password)
+
+        from .authentification import hash_password
+        admin.password_hash = hash_password(secure_password)
         admin.is_admin = True
+        db.add(admin)
         db.commit()
+        print("Admin password synchronized with environment variables.")
 
 def get_current_user(
     request: Request,
