@@ -1,0 +1,33 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Database files
+*.db
+*.sqlite3
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# PDF exports
+*.pdf
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
