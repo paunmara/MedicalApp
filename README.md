@@ -27,3 +27,42 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
 *  **`models.py`**: Declarative SQLAlchemy models for relational integrity.
 * **`authentification.py`**: Security layer managing password salting and hashing protocols.
 *  **`statistics`**: Business logic for hygiene compliance scoring and trend analysis.
+
+---
+
+## 📸 System Modules & Clinical Analytics
+
+### 🏠 Application Hub
+<p align="center">
+  <img src="assets/main_menu.png" height="350" alt="Main Dashboard">
+</p>
+<p align="center">
+  <em>Main entry point showcasing a modular UI designed for rapid clinical navigation.</em>
+</p>
+
+### 📊 Compliance Dashboards (Results)
+<p align="center">
+  <img src="assets/stats_moments.png" height="250" alt="WHO Stats">
+  <img src="assets/handwash_rating.png" height="250" alt="Handwash Stats">
+</p>
+<p align="center">
+  <em>Automated data aggregation engines calculating compliance thresholds and trend analysis.</em>
+</p>
+
+### 📝 Clinical Data Acquisition (The Process)
+<p align="center">
+  <img src="assets/audit_resources.png" height="220" alt="Resource Check">
+  <img src="assets/audit_rating.png" height="220" alt="Compliance Rating">
+  <img src="assets/handwash_rating.png" height="220" alt="Handwash Rating">
+</p>
+<p align="center">
+  <em>Optimized data-entry pipelines featuring server-side validation and responsive UX.</em>
+</p>
+
+### 📄 Professional Reporting
+<p align="center">
+  <img src="assets/pdf_report.png" height="400" alt="PDF Report">
+</p>
+<p align="center">
+  <em>Enterprise reporting module transforming relational SQL data into portable PDF documentation via WeasyPrint.</em>
+</p>
