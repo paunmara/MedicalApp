@@ -5,25 +5,25 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
 ## 🏗️ Technical Architecture & Engineering
 
 ### **Backend & API Design**
-* [cite_start]**Asynchronous Execution:** Leveraged **FastAPI** to build high-concurrency endpoints, utilizing Python’s `asyncio` for non-blocking I/O operations[cite: 2].
-* [cite_start]**Clean Architecture:** Implemented a modular directory structure separating business logic, database models, and server-side templates to ensure maintainability[cite: 38, 42, 49].
-* [cite_start]**Session Management:** Developed custom session-based authentication utilizing **Starlette Middleware** and **Bcrypt** hashing to secure sensitive clinical data.
+* **Asynchronous Execution:** Leveraged **FastAPI** to build high-concurrency endpoints, utilizing Python’s `asyncio` for non-blocking I/O operations.
+* **Clean Architecture:** Implemented a modular directory structure separating business logic, database models, and server-side templates to ensure maintainability.
+* **Session Management:** Developed custom session-based authentication utilizing **Starlette Middleware** and **Bcrypt** hashing to secure sensitive clinical data.
 
 ### **Data Persistence & Modeling**
-* [cite_start]**Relational Mapping:** Designed a robust schema using **SQLAlchemy** to manage complex one-to-many relationships between Users, Observations, and Technical Surveys[cite: 38, 39, 41].
-* [cite_start]**Database Hosting:** Integrated a **PostgreSQL** instance via **Supabase**, configuring connection pooling and SSL-enforced queries for enterprise-grade security[cite: 43, 44].
-* [cite_start]**Dynamic Migrations:** Engineered an automated database initialization sequence that handles table creation and admin bootstrapping on service startup[cite: 2, 47].
+* **Relational Mapping:** Designed a robust schema using **SQLAlchemy** to manage complex one-to-many relationships between Users, Observations, and Technical Surveys.
+* **Database Hosting:** Integrated a **PostgreSQL** instance via **Supabase**, configuring connection pooling and SSL-enforced queries for enterprise-grade security.
+* **Dynamic Migrations:** Engineered an automated database initialization sequence that handles table creation and admin bootstrapping on service startup.
 
 ### **Analytics & Reporting Engine**
-* [cite_start]**Statistical Aggregation:** Programmed complex SQL-based logic to calculate compliance rates, success-to-failure ratios, and "Good Hospital" status indicators across custom time windows (7–365 days)[cite: 21, 26, 30].
-* [cite_start]**Document Automation:** Integrated the **WeasyPrint** rendering engine to programmatically generate Monthly Resource Reports in PDF format, mapping dynamic Jinja2 templates to professional documentation[cite: 16, 18, 48].
+* **Statistical Aggregation:** Programmed complex SQL-based logic to calculate compliance rates, success-to-failure ratios, and "Good Hospital" status indicators across custom time windows (7–365 days).
+* **Document Automation:** Integrated the **WeasyPrint** rendering engine to programmatically generate Monthly Resource Reports in PDF format, mapping dynamic Jinja2 templates to professional documentation.
 
 ### **DevOps & Cloud Integration**
-* **CI/CD Pipeline:** Orchestrated deployment on **Render** using a custom Bash build script (`render_build.sh`) to automate environment-specific dependency resolution.
+* **I/CD Pipeline:** Orchestrated deployment on **Render** using a custom Bash build script (`render_build.sh`) to automate environment-specific dependency resolution.
 * **Production Web Server:** Configured **Gunicorn** with **Uvicorn workers** to provide a stable, production-grade WSGI/ASGI interface.
 
 ## 📂 Key Modules
-* [cite_start]`main.py`: Centralized routing and middleware configuration[cite: 1, 2].
-* [cite_start]`models.py`: Declarative SQLAlchemy models for relational integrity[cite: 38].
-* [cite_start]`authentification.py`: Security layer managing password salting and hashing protocols[cite: 46].
-* [cite_start]`statistics`: Business logic for hygiene compliance scoring and trend analysis[cite: 14, 21].
+* **`main.py`**: Centralized routing and middleware configuration.
+*  **`models.py`**: Declarative SQLAlchemy models for relational integrity.
+* **`authentification.py`**: Security layer managing password salting and hashing protocols.
+*  **`statistics`**: Business logic for hygiene compliance scoring and trend analysis.
