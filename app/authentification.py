@@ -3,8 +3,8 @@ from passlib.context import CryptContext
 from fastapi import Depends, Request
 from . import models
 from .database import get_db
+import os
 
-#password hashing setup
 pwd_context = CryptContext(schemes=["bcrypt"], bcrypt__rounds = 12, deprecated='auto')
 
 def hash_password(password: str) -> str:
@@ -32,9 +32,12 @@ def create_user(db: Session, username: str, password: str, is_admin: bool = True
 
 def init_admin_user(db):
     admin = get_user_by_username(db, "admin")
+    env_password = os.getenv("ADMIN_PASSWORD", "default_local_password")
+
     if not admin:
-        create_user(db, "admin", "rataratusca", is_admin = True)
+        create_user(db, "admin", env_password, is_admin=True)
     else:
+        admin.password_hash = hash_password(env_password)
         admin.is_admin = True
         db.commit()
 
