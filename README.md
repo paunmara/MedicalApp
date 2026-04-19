@@ -43,7 +43,7 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
 ### 📊 Compliance Dashboards (Results)
 <p align="center">
   <img src="assets/stats_moments.png" height="250" alt="WHO Stats">
-  <img src="assets/handwash_rating.png" height="250" alt="Handwash Stats">
+  <img src="assets/stats_handwash.png" height="250" alt="Handwash Stats">
 </p>
 <p align="center">
   <em>Automated data aggregation engines calculating compliance thresholds and trend analysis.</em>
