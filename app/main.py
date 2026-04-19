@@ -120,13 +120,14 @@ def create_new_user(
 
     if get_user_by_username(db, clean_username):
         return templates.TemplateResponse(
-            "create_user.html",
-            {"request": request, "error": "Acest username este deja folosit."}
+            request=request, 
+            name="create_user.html", 
+            context={"error": "Acest username este deja folosit."}
         )
 
     create_user(db, username=clean_username, password=password, is_admin=False)
 
-    return RedirectResponse(url="/login", status_code=status.HTTP_302_FOUND)
+    return RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
 
 
 
