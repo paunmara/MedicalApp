@@ -1,8 +1,8 @@
-# 🩺 Automated Clinical Audit & Hand Hygiene Analytics System
+# Automated Clinical Audit & Hand Hygiene Analytics System
 
 A sophisticated full-stack healthcare platform engineered to digitize clinical hygiene monitoring and provide real-time compliance analytics. This system implements the World Health Organization (WHO) "5 Moments" framework, transitioning healthcare environments from legacy paper-based auditing to a secure, cloud-native data architecture.
 
-## 🏗️ Technical Architecture & Engineering
+## Technical Architecture & Engineering
 
 ### **Backend & API Design**
 * **Asynchronous Execution:** Leveraged **FastAPI** to build high-concurrency endpoints, utilizing Python’s `asyncio` for non-blocking I/O operations.
@@ -22,7 +22,7 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
 * **I/CD Pipeline:** Orchestrated deployment on **Render** using a custom Bash build script (`render_build.sh`) to automate environment-specific dependency resolution.
 * **Production Web Server:** Configured **Gunicorn** with **Uvicorn workers** to provide a stable, production-grade WSGI/ASGI interface.
 
-## 📂 Key Modules
+## Key Modules
 * **`main.py`**: Centralized routing and middleware configuration.
 *  **`models.py`**: Declarative SQLAlchemy models for relational integrity.
 * **`authentification.py`**: Security layer managing password salting and hashing protocols.
@@ -30,9 +30,9 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
 
 ---
 
-## 📸 System Modules & Clinical Analytics
+## System Modules & Clinical Analytics
 
-### 🏠 Application Hub
+### Application Hub
 <p align="center">
   <img src="assets/main_menu.png" height="350" alt="Main Dashboard">
 </p>
@@ -40,7 +40,7 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
   <em>Main entry point showcasing a modular UI designed for rapid clinical navigation.</em>
 </p>
 
-### 📊 Compliance Dashboards (Results)
+### Compliance Dashboards (Results)
 <p align="center">
   <img src="assets/stats_moments.png" height="250" alt="WHO Stats">
   <img src="assets/stats_handwash.png" height="250" alt="Handwash Stats">
@@ -49,7 +49,7 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
   <em>Automated data aggregation engines calculating compliance thresholds and trend analysis.</em>
 </p>
 
-### 📝 Clinical Data Acquisition (The Process)
+### Clinical Data Acquisition (The Process)
 <p align="center">
   <img src="assets/audit_resources.png" height="220" alt="Resource Check">
   <img src="assets/audit_rating.png" height="220" alt="Compliance Rating">
@@ -59,7 +59,7 @@ A sophisticated full-stack healthcare platform engineered to digitize clinical h
   <em>Optimized data-entry pipelines featuring server-side validation and responsive UX.</em>
 </p>
 
-### 📄 Professional Reporting
+### Professional Reporting
 <p align="center">
   <img src="assets/pdf_report.png" height="400" alt="PDF Report">
 </p>
