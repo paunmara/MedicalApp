@@ -12,6 +12,6 @@ itsdangerous
 starlette
 weasyprint==52.5
 anyio
-psycopg2-binary
+psycopg[binary]
 gunicorn==21.2.0
 dotenv
